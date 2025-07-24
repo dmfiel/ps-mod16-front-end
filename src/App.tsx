@@ -1,5 +1,5 @@
 import './App.css';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import ThemeProvider, {
   BG_DARK,
   BG_LIGHT,
@@ -23,9 +23,15 @@ function App() {
   );
 }
 
+export const navigateBaseURL = import.meta.env.PROD
+  ? import.meta.env.VITE_FRONTEND_URL_PROD
+  : import.meta.env.VITE_FRONTEND_URL_DEV;
+export const baseURL = import.meta.env.PROD
+  ? import.meta.env.VITE_FRONTEND_BASE_PROD
+  : import.meta.env.VITE_FRONTEND_BASE_DEV;
+
 function ThemeWrapper() {
   const { theme } = useContext(ThemeContext);
-  const [token, setToken] = useState<string>('');
 
   return (
     <div
@@ -42,12 +48,11 @@ function ThemeWrapper() {
       <Navbar />
       <main className="mx-auto my-5 flex-1 flex flex-col gap-5 items-center">
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/register" element={<RegisterPage />} />
-          <Route path="/signin" element={<LoginPage />} />
-          <Route path="/feed" element={<FeedPage />} />
+          <Route path={`${baseURL}/`} element={<HomePage />} />
+          <Route path={`${baseURL}/register`} element={<RegisterPage />} />
+          <Route path={`${baseURL}/signin`} element={<LoginPage />} />
+          <Route path={`${baseURL}/feed`} element={<FeedPage />} />
         </Routes>
-        <p className="w-20">Token: {token}</p>
       </main>
       <footer role="contentinfo">
         <a

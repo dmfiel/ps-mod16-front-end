@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { backendClient } from '../clients/backendClient';
 import { useNavigate } from 'react-router-dom';
+import { baseURL } from '../App';
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -18,7 +19,7 @@ function LoginPage() {
       console.log(res.data);
       localStorage.setItem('social-app-token', res.data.token);
       backendClient.defaults.headers.common['Authorization'] = res.data.token; // update the JWT token for subsequent requests
-      navigate('/feed');
+      navigate(import.meta.env.PROD ? `${baseURL}/feed` : `../feed`);
     } catch (e) {
       console.error(e);
     }

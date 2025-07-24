@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { backendClient } from '../clients/backendClient';
 import { useNavigate } from 'react-router-dom';
+import { baseURL } from '../App';
 
 type PostType = {
   title: string;
@@ -16,7 +17,9 @@ function FeedPage() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const token = localStorage.getItem('social-app-token');
-    if (!token) return navigate('/signin');
+    if (!token)
+      return navigate(import.meta.env.PROD ? `${baseURL}/signin` : `../signin`);
+
     backendClient.defaults.headers.common['Authorization'] = token;
     try {
       const res = await backendClient.post('/posts', { title, body });
@@ -31,7 +34,10 @@ function FeedPage() {
     const fetchPosts = async () => {
       try {
         const token = localStorage.getItem('social-app-token');
-        if (!token) return navigate('/signin');
+        if (!token)
+          return navigate(
+            import.meta.env.PROD ? `${baseURL}/signin` : `../signin`
+          );
         backendClient.defaults.headers.common['Authorization'] = token;
 
         const res = await backendClient.get('/posts');
