@@ -1,7 +1,7 @@
 export function HomePage() {
   return (
     <>
-      <h1>Home Page</h1>
+      <h1>Welcome to the Social App</h1>
     </>
   );
 }

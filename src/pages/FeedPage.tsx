@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { backendClient } from '../clients/backendClient';
 import { useNavigate } from 'react-router-dom';
-import { baseURL } from '../App';
 
 type PostType = {
   title: string;
@@ -18,7 +17,11 @@ function FeedPage() {
     e.preventDefault();
     const token = localStorage.getItem('social-app-token');
     if (!token)
-      return navigate(import.meta.env.PROD ? `${baseURL}/signin` : `../signin`);
+      return navigate(
+        import.meta.env.PROD
+          ? `${import.meta.env.VITE_FRONTEND_BASE}/signin`
+          : `../signin`
+      );
 
     backendClient.defaults.headers.common['Authorization'] = token;
     try {
@@ -36,7 +39,9 @@ function FeedPage() {
         const token = localStorage.getItem('social-app-token');
         if (!token)
           return navigate(
-            import.meta.env.PROD ? `${baseURL}/signin` : `../signin`
+            import.meta.env.PROD
+              ? `${import.meta.env.VITE_FRONTEND_BASE}/signin`
+              : `../signin`
           );
         backendClient.defaults.headers.common['Authorization'] = token;
 
@@ -54,13 +59,19 @@ function FeedPage() {
   return (
     <main className="flex flex-col gap-5">
       <h1>Feed Page</h1>
-      {posts.map(post => (
-        <section>
-          <h2>{post.title}</h2>
+      {posts.map((post, index) => (
+        <section
+          key={index}
+          className="border rounded-lg bg-gray-100 dark:bg-gray-900 p-5"
+        >
+          <h2 className="text-center font-bold">{post.title}</h2>
           <h3>{post.body}</h3>
         </section>
       ))}
-      <form onSubmit={handleSubmit}>
+      <form
+        onSubmit={handleSubmit}
+        className="border rounded-lg bg-gray-100 dark:bg-gray-900 p-5"
+      >
         <h2>What's in your mind?</h2>
         <label htmlFor="title" />
         <input

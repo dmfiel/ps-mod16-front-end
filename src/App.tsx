@@ -23,13 +23,6 @@ function App() {
   );
 }
 
-export const navigateBaseURL = import.meta.env.PROD
-  ? import.meta.env.VITE_FRONTEND_URL_PROD
-  : import.meta.env.VITE_FRONTEND_URL_DEV;
-export const baseURL = import.meta.env.PROD
-  ? import.meta.env.VITE_FRONTEND_BASE_PROD
-  : import.meta.env.VITE_FRONTEND_BASE_DEV;
-
 function ThemeWrapper() {
   const { theme } = useContext(ThemeContext);
 
@@ -40,7 +33,7 @@ function ThemeWrapper() {
     >
       <header className="grid grid-cols-3">
         <div></div>
-        <h1 className="text-3xl font-bold text-center">Front End #2</h1>
+        <h1 className="text-3xl font-bold text-center">The Social App</h1>
         <div className="text-end">
           <ThemeButton />
         </div>
@@ -48,10 +41,22 @@ function ThemeWrapper() {
       <Navbar />
       <main className="mx-auto my-5 flex-1 flex flex-col gap-5 items-center">
         <Routes>
-          <Route path={`${baseURL}/`} element={<HomePage />} />
-          <Route path={`${baseURL}/register`} element={<RegisterPage />} />
-          <Route path={`${baseURL}/signin`} element={<LoginPage />} />
-          <Route path={`${baseURL}/feed`} element={<FeedPage />} />
+          <Route
+            path={`${import.meta.env.VITE_FRONTEND_BASE}/`}
+            element={<HomePage />}
+          />
+          <Route
+            path={`${import.meta.env.VITE_FRONTEND_BASE}/register`}
+            element={<RegisterPage />}
+          />
+          <Route
+            path={`${import.meta.env.VITE_FRONTEND_BASE}/signin`}
+            element={<LoginPage />}
+          />
+          <Route
+            path={`${import.meta.env.VITE_FRONTEND_BASE}/feed`}
+            element={<FeedPage />}
+          />
         </Routes>
       </main>
       <footer role="contentinfo">

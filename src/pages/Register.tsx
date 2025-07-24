@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { backendClient } from '../clients/backendClient';
 import { useNavigate } from 'react-router-dom';
-import { baseURL } from '../App';
 
 function RegisterPage() {
   const navigate = useNavigate();
@@ -19,7 +18,11 @@ function RegisterPage() {
       console.log(res.data);
       localStorage.setItem('social-app-token', res.data.token);
       backendClient.defaults.headers.common['Authorization'] = res.data.token; // update the JWT token for subsequent requests
-      return navigate(import.meta.env.PROD ? `${baseURL}/signin` : `../signin`);
+      return navigate(
+        import.meta.env.PROD
+          ? `${import.meta.env.VITE_FRONTEND_BASE}/signin`
+          : `../signin`
+      );
     } catch (e) {
       console.error(e);
     }
